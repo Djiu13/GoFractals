@@ -1,0 +1,74 @@
+<html>
+  <head>
+    <title>Fractale Viewer</title>
+    <style type="text/css">
+
+      #gauche{
+      width:20%;
+      float:left;
+      background-color:white;
+      margin:0;
+      }
+
+      #droite{
+      float:right;
+      background-color:white;
+      width:80%;
+      margin:0;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="gauche">
+      <h1>Fractale Viewer</h1>
+      <form action="/mandelbrot" method="POST" enctype="multipart/form-data">
+	Constante C:<br />
+	<label>a</label><input type="text" name="a" value="{{.A}}"/><br />
+	<label>b</label><input type="text" name="b" value="{{.B}}"/><br />
+
+	Image size:<br />
+	<label>Weight</label><input type="text" name="w" value="{{.W}}"/><br />
+	<label>Height</label><input type="text" name="h" value="{{.H}}"/><br />
+
+	<input type="text" readonly="readonly" name="p" value="{{.P}}" />
+
+
+	<br /><br />
+
+	<input type="hidden" name="ox" value="{{.Ox}}"/>
+	<input type="hidden" name="oy" value="{{.Oy}}"/>
+
+
+	<input type="submit" name="MoveLeft" value="<" />
+	<input type="submit" name="MoveRight" value=">" />
+	<input type="submit" name="MoveDown" value="\/" />
+	<input type="submit" name="MoveUp" value="^" />
+	<input type="submit" name="ZoomIn" value="+" />
+	<input type="submit" name="ZoomOut" value="-" />
+	<input type="hidden" name="fractaleName" value="{{.FractaleName}}" />
+      </form>
+
+      <br />
+      <hr>
+      Complex Constante exemple:<br />
+      a: -0.8<br />
+      b: 0.156i<br />
+      <br />
+      a: -1.417022285618<br />
+      b: 0.0099534i<br />
+      <br />
+      a: 0.285<br />
+      b: 0.013i<br />
+      <br />
+      a: 0.3<br />
+      b: 0.5i<br />
+      <br />
+      a: 0.285<br />
+      b: 0.01i<br />
+    </div>
+    <div id="droite">
+      <img src="image.png" alt="image" title="{{.FractaleName}}" />
+    </div>
+  </body>
+</html>

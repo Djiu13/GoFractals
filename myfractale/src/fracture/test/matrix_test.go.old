@@ -1,0 +1,76 @@
+package test
+
+import (
+	"fracture/data"
+	"testing"
+)
+
+func TestMatrix(test *testing.T) {
+	matrix := data.NewMatrix(10, 10)
+
+	matrix.Set(1, 1, 10.5)
+
+	if val := matrix.At(1, 1); val != 10.5 {
+		test.Errorf("Put value in matrix : ok")
+	}
+}
+
+func TestLinearIterator(test *testing.T) {
+	matrix := data.NewMatrix(10, 10)
+
+	for it, j := data.NewLinearIterator(matrix), 0; j < matrix.Height(); j++ {
+		for i := 0; i < matrix.Width(); i++ {
+			if x, y := it.GetCoordinate(); x != i || y != j {
+				test.Errorf("Wrong iterator travel (%d %d)", x, y)
+			}
+
+			if it.HasNext() {
+				it.Next()
+			}
+		}
+	}
+}
+
+func BenchmarkMatrixAccess(b *testing.B) {
+	b.StopTimer()
+	matrix := data.NewMatrix(1, 1)
+	b.StartTimer()
+	for x := 0; x < b.N; x++ {
+		matrix.At(0, 0)
+	}
+}
+
+func BenchmarkIteratorCross(b *testing.B) {
+	b.StopTimer()
+	matrix := data.NewMatrix(10000, 10000)
+	b.StartTimer()
+	at := func(i int, j int) { matrix.At(i, j) }
+	for x := 0; x < b.N; x++ {
+		for it := data.NewLinearIterator(matrix); it.HasNext(); it.Next() {
+			at(0, 0)
+		}
+	}
+}
+
+func BenchmarkFunctionCross(b *testing.B) {
+	b.StopTimer()
+	matrix := data.NewMatrix(10000, 10000)
+	b.StartTimer()
+	for x := 0; x < b.N; x++ {
+		data.LinearCourse(matrix, func(i int, j int) { matrix.At(i, j) })
+	}
+}
+
+func BenchmarkLinearCross(b *testing.B) {
+	b.StopTimer()
+	matrix := data.NewMatrix(10000, 10000)
+	b.StartTimer()
+	at := func(i int, j int) { matrix.At(i, j) }
+	for x := 0; x < b.N; x++ {
+		for j := 0; j < matrix.Height(); j++ {
+			for i := 0; i < matrix.Width(); i++ {
+				at(i, j)
+			}
+		}
+	}
+}

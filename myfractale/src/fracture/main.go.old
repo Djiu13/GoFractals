@@ -1,0 +1,25 @@
+package main
+
+import (
+	"fracture/algorithm"
+	"fracture/view"
+)
+
+func main() {
+	a := 0
+	if(a==0) {
+	box := view.NewTermboxScreen(800, 600, view.ASCII)
+	//box := view.NewImageSaver(800, 600, "test.png")
+	box.Init()
+	defer box.Close()
+
+	go box.EventLoop(algorithm.GetJuliaRoutine(-0.8 + 0.156i))
+	box.FlushLoop()
+	} else {
+	is := view.NewImageSaver(800, 600, "testX.png")
+	is.Init()
+	routine := algorithm.GetJuliaRoutine(-0.8 + 0.156i)
+	routine(is, 800, 600, 0.003020, 0.001040, 0.000050)
+			is.FlushLoop()
+	}
+}

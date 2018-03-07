@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title>Fractale Viewer</title>
+  </head>
+  <body>
+
+    <form action="/mandelbrot" method="POST">
+      <input type="hidden" name="oy" value="0.000000"/>
+      <input type="hidden" name="ox" value="0.000000"/>
+      <input type="hidden" name="w" value="800"/>
+      <input type="hidden" name="h" value="600"/>
+      <input type="hidden" name="p" value="0.010000" />
+      <input type="hidden" name="fractaleName" value="Julia" />
+      <input type="hidden" name="ZoomIn" value="ZoomIn" />
+
+      Complex constante:<br />
+      <label>a</label><input type="text" name="a" value="-0.8" /><br />
+      <label>b</label><input type="text" name="b" value="0.156" /><br />
+
+      <input type="submit" value="Go !">
+    </form>
+  </body>
+</html>
